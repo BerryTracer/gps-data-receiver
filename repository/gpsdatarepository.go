@@ -54,3 +54,6 @@ func (m *MongoGPSDataRepository) FindByUserID(ctx context.Context, userID string
 
 	return gpsData, nil
 }
+
+// Ensure MongoGPSDataRepository implements GPSDataRepository
+var _ GPSDataRepository = (*MongoGPSDataRepository)(nil)
