@@ -5,6 +5,7 @@ import (
 	"errors"
 	"reflect"
 	"testing"
+	"time"
 
 	"github.com/BerryTracer/gps-data-service/repository/mock"
 
@@ -21,7 +22,13 @@ func TestGPSServiceImpl_Save(t *testing.T) {
 	service := NewGPSService(mockRepo)
 
 	ctx := context.Background()
-	gpsData := &model.GPSData{ /* ... set test data ... */ }
+	gpsData := &model.GPSData{
+		DeviceID:  "1",
+		Latitude:  37.7749,
+		Longitude: -122.4194,
+		Timestamp: time.Now(),
+		UserID:    "test-user",
+	}
 
 	// Success scenario
 	mockRepo.EXPECT().Save(ctx, gpsData).Return(nil)
@@ -49,7 +56,22 @@ func TestGPSServiceImpl_FindByDeviceID(t *testing.T) {
 	deviceID := "test-device"
 
 	// Mock data
-	gpsData := []*model.GPSData{ /* ... set test data ... */ }
+	gpsData := []*model.GPSData{
+		{
+			DeviceID:  "1",
+			Latitude:  37.7749,
+			Longitude: -122.4194,
+			Timestamp: time.Now(),
+			UserID:    "test-user",
+		},
+		{
+			DeviceID:  "2",
+			Latitude:  34.0522,
+			Longitude: -118.2437,
+			Timestamp: time.Now(),
+			UserID:    "test-user",
+		},
+	}
 
 	// Success scenario
 	mockRepo.EXPECT().FindByDeviceID(ctx, deviceID).Return(gpsData, nil)
@@ -80,7 +102,22 @@ func TestGPSServiceImpl_FindByUserID(t *testing.T) {
 	userID := "test-user"
 
 	// Mock data
-	gpsData := []*model.GPSData{ /* ... set test data ... */ }
+	gpsData := []*model.GPSData{
+		{
+			DeviceID:  "1",
+			Latitude:  37.7749,
+			Longitude: -122.4194,
+			Timestamp: time.Now(),
+			UserID:    "test-user",
+		},
+		{
+			DeviceID:  "2",
+			Latitude:  34.0522,
+			Longitude: -118.2437,
+			Timestamp: time.Now(),
+			UserID:    "test-user",
+		},
+	}
 
 	// Success scenario
 	mockRepo.EXPECT().FindByUserID(ctx, userID).Return(gpsData, nil)
