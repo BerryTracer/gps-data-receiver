@@ -24,10 +24,9 @@ func main() {
 	gpsHandler := api.NewGPSHandler(gpsService)
 
 	app := fiber.New()
+	fiberRouter := api.NewFiberRouter(app)
 
-	app.Post("/gps", func(c *fiber.Ctx) error {
-		return gpsHandler.SaveGPSData(api.NewFiberContext(c))
-	})
+	fiberRouter.Post("/gps", gpsHandler.SaveGPSData)
 
 	app.Listen(":3000")
 }
