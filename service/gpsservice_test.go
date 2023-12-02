@@ -3,10 +3,12 @@ package service
 import (
 	"context"
 	"errors"
-	"gps-data-receiver/model"
-	"gps-data-receiver/repository/mock"
 	"reflect"
 	"testing"
+
+	"github.com/BerryTracer/gps-data-service/repository/mock"
+
+	"github.com/BerryTracer/gps-data-service/model"
 
 	"github.com/golang/mock/gomock"
 )

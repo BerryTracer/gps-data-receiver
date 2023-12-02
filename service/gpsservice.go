@@ -2,8 +2,10 @@ package service
 
 import (
 	"context"
-	"gps-data-receiver/model"
-	"gps-data-receiver/repository"
+
+	"github.com/BerryTracer/gps-data-service/repository"
+
+	"github.com/BerryTracer/gps-data-service/model"
 )
 
 type GPSService interface {

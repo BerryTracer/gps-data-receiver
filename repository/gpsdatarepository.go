@@ -2,7 +2,8 @@ package repository
 
 import (
 	"context"
-	"gps-data-receiver/model"
+
+	"github.com/BerryTracer/gps-data-service/model"
 
 	"github.com/BerryTracer/common-service/adapter"
 

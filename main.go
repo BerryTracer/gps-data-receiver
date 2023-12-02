@@ -1,10 +1,13 @@
 package main
 
 import (
-	"gps-data-receiver/api"
-	"gps-data-receiver/database"
-	"gps-data-receiver/repository"
-	"gps-data-receiver/service"
+	"github.com/BerryTracer/gps-data-service/service"
+
+	"github.com/BerryTracer/gps-data-service/repository"
+
+	"github.com/BerryTracer/gps-data-service/database"
+
+	"github.com/BerryTracer/gps-data-service/api"
 
 	"github.com/BerryTracer/common-service/adapter"
 

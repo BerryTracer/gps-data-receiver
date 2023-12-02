@@ -3,8 +3,9 @@ package repository
 import (
 	"context"
 	"errors"
-	"gps-data-receiver/model"
 	"testing"
+
+	"github.com/BerryTracer/gps-data-service/model"
 
 	"github.com/BerryTracer/common-service/adapter/mock"
 

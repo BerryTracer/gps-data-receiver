@@ -1,8 +1,9 @@
 package api
 
 import (
-	"gps-data-receiver/model"
-	"gps-data-receiver/service"
+	"github.com/BerryTracer/gps-data-service/service"
+
+	"github.com/BerryTracer/gps-data-service/model"
 )
 
 type GPSHandler struct {

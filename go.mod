@@ -1,4 +1,4 @@
-module gps-data-receiver
+module github.com/BerryTracer/gps-data-service
 
 go 1.21.3
 

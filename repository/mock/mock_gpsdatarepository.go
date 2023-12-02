@@ -6,7 +6,7 @@ package mock
 
 import (
 	context "context"
-	model "gps-data-receiver/model"
+	model "github.com/BerryTracer/gps-data-service/model"
 	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"
