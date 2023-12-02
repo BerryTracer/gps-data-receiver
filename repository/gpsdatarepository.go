@@ -4,6 +4,8 @@ import (
 	"common-utils/adapter"
 	"context"
 	"gps-data-receiver/model"
+
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 type GPSDataRepository interface {
@@ -26,7 +28,8 @@ func (m *MongoGPSDataRepository) Save(ctx context.Context, gpsData *model.GPSDat
 }
 
 func (m *MongoGPSDataRepository) FindByDeviceID(ctx context.Context, deviceID string) ([]*model.GPSData, error) {
-	cursor, err := m.Collection.Find(ctx, map[string]string{"device_id": deviceID})
+	filter := primitive.M{"device_id": deviceID}
+	cursor, err := m.Collection.Find(ctx, filter)
 	if err != nil {
 		return nil, err
 	}
@@ -41,7 +44,8 @@ func (m *MongoGPSDataRepository) FindByDeviceID(ctx context.Context, deviceID st
 }
 
 func (m *MongoGPSDataRepository) FindByUserID(ctx context.Context, userID string) ([]*model.GPSData, error) {
-	cursor, err := m.Collection.Find(ctx, map[string]string{"user_id": userID})
+	filter := primitive.M{"user_id": userID}
+	cursor, err := m.Collection.Find(ctx, filter)
 	if err != nil {
 		return nil, err
 	}

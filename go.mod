@@ -6,6 +6,7 @@ require github.com/gofiber/fiber/v2 v2.51.0
 
 require (
 	github.com/andybalholm/brotli v1.0.5 // indirect
+	github.com/golang/mock v1.6.0 // indirect
 	github.com/golang/snappy v0.0.1 // indirect
 	github.com/google/uuid v1.4.0 // indirect
 	github.com/klauspost/compress v1.16.7 // indirect
