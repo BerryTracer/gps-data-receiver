@@ -1,11 +1,12 @@
 package main
 
 import (
-	"common-utils/adapter"
 	"gps-data-receiver/api"
 	"gps-data-receiver/database"
 	"gps-data-receiver/repository"
 	"gps-data-receiver/service"
+
+	"github.com/BerryTracer/common-service/adapter"
 
 	"github.com/gofiber/fiber/v2"
 )

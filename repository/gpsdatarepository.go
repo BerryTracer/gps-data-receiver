@@ -1,9 +1,10 @@
 package repository
 
 import (
-	"common-utils/adapter"
 	"context"
 	"gps-data-receiver/model"
+
+	"github.com/BerryTracer/common-service/adapter"
 
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )

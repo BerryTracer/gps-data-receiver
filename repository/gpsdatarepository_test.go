@@ -1,11 +1,12 @@
 package repository
 
 import (
-	"common-utils/adapter/mock"
 	"context"
 	"errors"
 	"gps-data-receiver/model"
 	"testing"
+
+	"github.com/BerryTracer/common-service/adapter/mock"
 
 	"github.com/golang/mock/gomock"
 	"go.mongodb.org/mongo-driver/bson"
