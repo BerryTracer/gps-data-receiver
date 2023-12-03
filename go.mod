@@ -3,7 +3,7 @@ module github.com/BerryTracer/gps-data-service
 go 1.21.3
 
 require (
-	github.com/BerryTracer/common-service v1.0.3
+	github.com/BerryTracer/common-service v1.0.4
 	github.com/gofiber/fiber/v2 v2.51.0
 	github.com/golang/mock v1.6.0
 	go.mongodb.org/mongo-driver v1.13.0
@@ -35,5 +35,6 @@ require (
 	golang.org/x/sync v0.5.0 // indirect
 	golang.org/x/sys v0.15.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
+	google.golang.org/genproto v0.0.0-20231120223509-83a465c0220f // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20231127180814-3a041ad873d4 // indirect
 )
