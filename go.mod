@@ -7,6 +7,8 @@ require (
 	github.com/gofiber/fiber/v2 v2.51.0
 	github.com/golang/mock v1.6.0
 	go.mongodb.org/mongo-driver v1.13.0
+	google.golang.org/grpc v1.59.0
+	google.golang.org/protobuf v1.31.0
 )
 
 require (
@@ -34,6 +36,4 @@ require (
 	golang.org/x/sys v0.15.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20231127180814-3a041ad873d4 // indirect
-	google.golang.org/grpc v1.59.0 // indirect
-	google.golang.org/protobuf v1.31.0 // indirect
 )
