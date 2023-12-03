@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+option go_package = "github.com/BerryTracer/gps-data-service/grpc";
+
+import "google/protobuf/empty.proto";
+
+service GPSService {
+  rpc Save (GPSData) returns (google.protobuf.Empty);
+  rpc FindByDeviceID (FindByDeviceIDRequest) returns (GPSDataList);
+  rpc FindByUserID (FindByUserIDRequest) returns (GPSDataList);
+}
+
+message GPSData {
+  string device_id = 1;
+  double latitude = 2;
+  double longitude = 3;
+  int64 timestamp = 4;
+  string user_id = 5;
+}
+
+message FindByDeviceIDRequest {
+  string device_id = 1;
+}
+
+message FindByUserIDRequest {
+  string user_id = 1;
+}
+
+message GPSDataList {
+  repeated GPSData gps_data = 1;
+}
