@@ -1,6 +1,8 @@
 package api
 
 import (
+	"errors"
+
 	"github.com/BerryTracer/gps-data-service/service"
 
 	"github.com/BerryTracer/gps-data-service/model"
@@ -23,4 +25,21 @@ func (g *GPSHandler) SaveGPSData(c HttpContext) error {
 	}
 
 	return g.Service.Save(c.Context(), &gpsData)
+}
+
+func (g *GPSHandler) GetGPSDataByDeviceId(c HttpContext) error {
+	deviceId := c.Query("device_id")
+	if deviceId == "" {
+		c.SendStatus(400)
+		return errors.New("device_id is required")
+	}
+
+	gpsDataArray, err := g.Service.FindByDeviceID(c.Context(), deviceId)
+	if err != nil {
+		c.JSON(400, err)
+		return err
+	}
+
+	c.JSON(200, gpsDataArray)
+	return nil
 }

@@ -35,6 +35,7 @@ func main() {
 
 	// Define routes
 	fiberRouter.Post("/gps", gpsHandler.SaveGPSData)
+	fiberRouter.Get("/gps", gpsHandler.GetGPSDataByDeviceId)
 
 	// Start the server
 	app.Listen(":3000")

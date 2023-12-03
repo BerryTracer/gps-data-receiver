@@ -43,3 +43,16 @@ func (c *FiberContext) SendStatus(statusCode int) error {
 func (c *FiberContext) Context() context.Context {
 	return c.Ctx.Context()
 }
+
+// Params returns the value of the specified parameter from the request.
+func (c *FiberContext) Params(key string) string {
+	return c.Ctx.Params(key)
+}
+
+// Query returns the value of the specified query parameter from the request.
+func (c *FiberContext) Query(key string) string {
+	return c.Ctx.Query(key)
+}
+
+// Ensure that FiberContext implements HttpContext
+var _ HttpContext = (*FiberContext)(nil)

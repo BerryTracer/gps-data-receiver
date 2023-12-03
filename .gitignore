@@ -554,4 +554,7 @@ FodyWeavers.xsd
 # Env
 .env
 
+# Debug
+__debug_bin*
+
 # End of https://www.toptal.com/developers/gitignore/api/go,intellij,visualstudiocode,visualstudio

@@ -4,6 +4,7 @@ import "github.com/gofiber/fiber/v2"
 
 type HttpRouter interface {
 	Post(string, func(HttpContext) error)
+	Get(string, func(HttpContext) error)
 }
 
 type FiberRouter struct {
@@ -19,3 +20,12 @@ func (f *FiberRouter) Post(path string, handler func(HttpContext) error) {
 		return handler(NewFiberContext(c))
 	})
 }
+
+func (f *FiberRouter) Get(path string, handler func(HttpContext) error) {
+	f.App.Get(path, func(c *fiber.Ctx) error {
+		return handler(NewFiberContext(c))
+	})
+}
+
+// Ensure that FiberRouter implements HttpRouter
+var _ HttpRouter = (*FiberRouter)(nil)
