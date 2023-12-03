@@ -3,10 +3,8 @@ package repository
 import (
 	"context"
 
-	"github.com/BerryTracer/gps-data-service/model"
-
 	"github.com/BerryTracer/common-service/adapter"
-
+	"github.com/BerryTracer/gps-data-service/model"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
