@@ -28,13 +28,30 @@ func (g *GPSHandler) SaveGPSData(c HttpContext) error {
 }
 
 func (g *GPSHandler) GetGPSDataByDeviceId(c HttpContext) error {
-	deviceId := c.Query("device_id")
+	deviceId := c.Params("device_id")
 	if deviceId == "" {
 		c.SendStatus(400)
 		return errors.New("device_id is required")
 	}
 
 	gpsDataArray, err := g.Service.FindByDeviceID(c.Context(), deviceId)
+	if err != nil {
+		c.JSON(400, err)
+		return err
+	}
+
+	c.JSON(200, gpsDataArray)
+	return nil
+}
+
+func (g *GPSHandler) GetGPSDataByUserId(c HttpContext) error {
+	userId := c.Params("user_id")
+	if userId == "" {
+		c.SendStatus(400)
+		return errors.New("user_id is required")
+	}
+
+	gpsDataArray, err := g.Service.FindByUserID(c.Context(), userId)
 	if err != nil {
 		c.JSON(400, err)
 		return err
