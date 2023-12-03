@@ -16,6 +16,12 @@ type HttpContext interface {
 	// SendStatus sends a response with the given status code.
 	SendStatus(int) error
 
+	// Params returns the value of the specified parameter from the request.
+	Params(key string) string
+
+	// Query returns the value of the specified query parameter from the request.
+	Query(key string) string
+
 	// Context returns the context.Context from the underlying framework context.
 	Context() context.Context
 }
