@@ -1,22 +1,23 @@
 package main
 
 import (
-	"github.com/BerryTracer/gps-data-service/service"
-
-	"github.com/BerryTracer/gps-data-service/repository"
-
-	"github.com/BerryTracer/gps-data-service/database"
-
-	"github.com/BerryTracer/gps-data-service/api"
-
 	"github.com/BerryTracer/common-service/adapter"
-
+	"github.com/BerryTracer/common-service/config"
+	"github.com/BerryTracer/gps-data-service/api"
+	"github.com/BerryTracer/gps-data-service/database"
+	"github.com/BerryTracer/gps-data-service/repository"
+	"github.com/BerryTracer/gps-data-service/service"
 	"github.com/gofiber/fiber/v2"
 )
 
 func main() {
+	mongodbURI, err := config.LoadEnv("MONGODB_URI")
+	if err != nil {
+		panic(err)
+	}
+
 	// Create a new database connection
-	db, err := database.NewGPSDatabaseConnection("mongodb://root:password@localhost:27017")
+	db, err := database.NewGPSDatabaseConnection(mongodbURI)
 	if err != nil {
 		panic(err)
 	}
