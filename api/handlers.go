@@ -25,6 +25,12 @@ func (g *GPSHandler) SaveGPSData(c HttpContext) error {
 		return err
 	}
 
+	err = gpsData.Validate()
+	if err != nil {
+		c.JSON(400, err)
+		return err
+	}
+
 	return g.Service.Save(c.Context(), &gpsData)
 }
 
