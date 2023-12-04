@@ -2,6 +2,7 @@ package api
 
 import (
 	"errors"
+	"strconv"
 
 	"github.com/BerryTracer/gps-data-service/service"
 
@@ -34,7 +35,17 @@ func (g *GPSHandler) GetGPSDataByDeviceId(c HttpContext) error {
 		return errors.New("device_id is required")
 	}
 
-	gpsDataArray, err := g.Service.FindByDeviceID(c.Context(), deviceId)
+	limit, err := strconv.ParseInt(c.Query("limit"), 10, 64)
+	if err != nil {
+		limit = 10
+	}
+
+	offset, err := strconv.ParseInt(c.Query("offset"), 10, 64)
+	if err != nil {
+		offset = 0
+	}
+
+	gpsDataArray, err := g.Service.FindByDeviceID(c.Context(), deviceId, limit, offset)
 	if err != nil {
 		c.JSON(400, err)
 		return err
@@ -51,7 +62,17 @@ func (g *GPSHandler) GetGPSDataByUserId(c HttpContext) error {
 		return errors.New("user_id is required")
 	}
 
-	gpsDataArray, err := g.Service.FindByUserID(c.Context(), userId)
+	limit, err := strconv.ParseInt(c.Query("limit"), 10, 64)
+	if err != nil {
+		limit = 10
+	}
+
+	offset, err := strconv.ParseInt(c.Query("offset"), 10, 64)
+	if err != nil {
+		offset = 0
+	}
+
+	gpsDataArray, err := g.Service.FindByUserID(c.Context(), userId, limit, offset)
 	if err != nil {
 		c.JSON(400, err)
 		return err
