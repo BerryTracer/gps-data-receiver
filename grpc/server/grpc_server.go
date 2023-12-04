@@ -78,6 +78,12 @@ func (s *GPSServer) Save(ctx context.Context, req *proto.GPSData) (*emptypb.Empt
 		Timestamp: time.Unix(req.GetTimestamp(), 0),
 		UserID:    req.GetUserId(),
 	}
+
+	if err := gpsData.Validate(); err != nil {
+		log.Fatalf("failed to validate gps data: %v\n", err)
+		return nil, err
+	}
+
 	err := s.GPSService.Save(ctx, gpsData)
 	if err != nil {
 		log.Fatalf("failed to save gps data: %v\n", err)
