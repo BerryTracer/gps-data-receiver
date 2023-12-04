@@ -7,9 +7,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/BerryTracer/gps-data-service/repository/mock"
-
 	"github.com/BerryTracer/gps-data-service/model"
+	mock_repository "github.com/BerryTracer/gps-data-service/repository/mock"
 
 	"github.com/golang/mock/gomock"
 )
@@ -18,7 +17,7 @@ func TestGPSServiceImpl_Save(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockRepo := mock.NewMockGPSDataRepository(ctrl)
+	mockRepo := mock_repository.NewMockGPSDataRepository(ctrl)
 	service := NewGPSService(mockRepo)
 
 	ctx := context.Background()
@@ -49,11 +48,13 @@ func TestGPSServiceImpl_FindByDeviceID(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockRepo := mock.NewMockGPSDataRepository(ctrl)
+	mockRepo := mock_repository.NewMockGPSDataRepository(ctrl)
 	service := NewGPSService(mockRepo)
 
 	ctx := context.Background()
 	deviceID := "test-device"
+	limit := int64(10)
+	offset := int64(0)
 
 	// Mock data
 	gpsData := []*model.GPSData{
@@ -74,8 +75,8 @@ func TestGPSServiceImpl_FindByDeviceID(t *testing.T) {
 	}
 
 	// Success scenario
-	mockRepo.EXPECT().FindByDeviceID(ctx, deviceID).Return(gpsData, nil)
-	result, err := service.FindByDeviceID(ctx, deviceID)
+	mockRepo.EXPECT().FindByDeviceID(ctx, deviceID, limit, offset).Return(gpsData, nil)
+	result, err := service.FindByDeviceID(ctx, deviceID, limit, offset)
 	if err != nil {
 		t.Errorf("FindByDeviceID() error = %v, wantErr %v", err, nil)
 	}
@@ -84,8 +85,8 @@ func TestGPSServiceImpl_FindByDeviceID(t *testing.T) {
 	}
 
 	// Error scenario
-	mockRepo.EXPECT().FindByDeviceID(ctx, deviceID).Return(nil, errors.New("find error"))
-	_, err = service.FindByDeviceID(ctx, deviceID)
+	mockRepo.EXPECT().FindByDeviceID(ctx, deviceID, limit, offset).Return(nil, errors.New("find error"))
+	_, err = service.FindByDeviceID(ctx, deviceID, limit, offset)
 	if err == nil {
 		t.Error("FindByDeviceID() expected an error, got nil")
 	}
@@ -95,11 +96,13 @@ func TestGPSServiceImpl_FindByUserID(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockRepo := mock.NewMockGPSDataRepository(ctrl)
+	mockRepo := mock_repository.NewMockGPSDataRepository(ctrl)
 	service := NewGPSService(mockRepo)
 
 	ctx := context.Background()
 	userID := "test-user"
+	limit := int64(10)
+	offset := int64(0)
 
 	// Mock data
 	gpsData := []*model.GPSData{
@@ -120,8 +123,8 @@ func TestGPSServiceImpl_FindByUserID(t *testing.T) {
 	}
 
 	// Success scenario
-	mockRepo.EXPECT().FindByUserID(ctx, userID).Return(gpsData, nil)
-	result, err := service.FindByUserID(ctx, userID)
+	mockRepo.EXPECT().FindByUserID(ctx, userID, limit, offset).Return(gpsData, nil)
+	result, err := service.FindByUserID(ctx, userID, limit, offset)
 	if err != nil {
 		t.Errorf("FindByUserID() error = %v, wantErr %v", err, nil)
 	}
@@ -130,8 +133,8 @@ func TestGPSServiceImpl_FindByUserID(t *testing.T) {
 	}
 
 	// Error scenario
-	mockRepo.EXPECT().FindByUserID(ctx, userID).Return(nil, errors.New("find error"))
-	_, err = service.FindByUserID(ctx, userID)
+	mockRepo.EXPECT().FindByUserID(ctx, userID, limit, offset).Return(nil, errors.New("find error"))
+	_, err = service.FindByUserID(ctx, userID, limit, offset)
 	if err == nil {
 		t.Error("FindByUserID() expected an error, got nil")
 	}

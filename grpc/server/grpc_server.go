@@ -41,7 +41,7 @@ func (s *GPSServer) Run(port string) error {
 }
 
 func (s *GPSServer) FindByDeviceID(ctx context.Context, req *proto.FindByDeviceIDRequest) (*proto.GPSDataList, error) {
-	gpsDataList, err := s.GPSService.FindByUserID(ctx, req.GetDeviceId())
+	gpsDataList, err := s.GPSService.FindByUserID(ctx, req.GetDeviceId(), int64(req.Limit), int64(req.Offset))
 	if err != nil {
 		log.Fatalf("failed to find gps data by device id: %v\n", err)
 		return nil, err
@@ -56,7 +56,7 @@ func (s *GPSServer) FindByDeviceID(ctx context.Context, req *proto.FindByDeviceI
 }
 
 func (s *GPSServer) FindByUserID(ctx context.Context, req *proto.FindByUserIDRequest) (*proto.GPSDataList, error) {
-	gpsDataList, err := s.GPSService.FindByUserID(ctx, req.GetUserId())
+	gpsDataList, err := s.GPSService.FindByUserID(ctx, req.GetUserId(), int64(req.Limit), int64(req.Offset))
 	if err != nil {
 		log.Fatalf("failed to find gps data by user id: %v\n", err)
 		return nil, err

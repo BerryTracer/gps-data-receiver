@@ -34,7 +34,7 @@ func (g *GPSHandler) GetGPSDataByDeviceId(c HttpContext) error {
 		return errors.New("device_id is required")
 	}
 
-	gpsDataArray, err := g.Service.FindByDeviceID(c.Context(), deviceId)
+	gpsDataArray, err := g.Service.FindByDeviceID(c.Context(), deviceId, 10, 0)
 	if err != nil {
 		c.JSON(400, err)
 		return err
@@ -51,7 +51,7 @@ func (g *GPSHandler) GetGPSDataByUserId(c HttpContext) error {
 		return errors.New("user_id is required")
 	}
 
-	gpsDataArray, err := g.Service.FindByUserID(c.Context(), userId)
+	gpsDataArray, err := g.Service.FindByUserID(c.Context(), userId, 10, 0)
 	if err != nil {
 		c.JSON(400, err)
 		return err

@@ -6,12 +6,13 @@ import (
 	"github.com/BerryTracer/common-service/adapter"
 	"github.com/BerryTracer/gps-data-service/model"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 type GPSDataRepository interface {
 	Save(ctx context.Context, gpsData *model.GPSData) error
-	FindByDeviceID(ctx context.Context, deviceID string) ([]*model.GPSData, error)
-	FindByUserID(ctx context.Context, userID string) ([]*model.GPSData, error)
+	FindByDeviceID(ctx context.Context, deviceID string, page, pageSize int64) ([]*model.GPSData, error)
+	FindByUserID(ctx context.Context, userID string, page, pageSize int64) ([]*model.GPSData, error)
 }
 
 type MongoGPSDataRepository struct {
@@ -27,9 +28,12 @@ func (m *MongoGPSDataRepository) Save(ctx context.Context, gpsData *model.GPSDat
 	return err
 }
 
-func (m *MongoGPSDataRepository) FindByDeviceID(ctx context.Context, deviceID string) ([]*model.GPSData, error) {
+func (m *MongoGPSDataRepository) FindByDeviceID(ctx context.Context, deviceID string, page, pageSize int64) ([]*model.GPSData, error) {
 	filter := primitive.M{"device_id": deviceID}
-	cursor, err := m.Collection.Find(ctx, filter)
+	skip := (page - 1) * pageSize
+	options := options.Find().SetSkip(skip).SetLimit(pageSize)
+
+	cursor, err := m.Collection.Find(ctx, filter, options)
 	if err != nil {
 		return nil, err
 	}
@@ -43,9 +47,12 @@ func (m *MongoGPSDataRepository) FindByDeviceID(ctx context.Context, deviceID st
 	return gpsData, nil
 }
 
-func (m *MongoGPSDataRepository) FindByUserID(ctx context.Context, userID string) ([]*model.GPSData, error) {
+func (m *MongoGPSDataRepository) FindByUserID(ctx context.Context, userID string, page, pageSize int64) ([]*model.GPSData, error) {
 	filter := primitive.M{"user_id": userID}
-	cursor, err := m.Collection.Find(ctx, filter)
+	skip := (page - 1) * pageSize
+	options := options.Find().SetSkip(skip).SetLimit(pageSize)
+
+	cursor, err := m.Collection.Find(ctx, filter, options)
 	if err != nil {
 		return nil, err
 	}

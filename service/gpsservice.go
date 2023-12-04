@@ -9,8 +9,8 @@ import (
 
 type GPSService interface {
 	Save(ctx context.Context, gpsData *model.GPSData) error
-	FindByDeviceID(ctx context.Context, deviceID string) ([]*model.GPSData, error)
-	FindByUserID(ctx context.Context, userID string) ([]*model.GPSData, error)
+	FindByDeviceID(ctx context.Context, deviceID string, limit, offset int64) ([]*model.GPSData, error)
+	FindByUserID(ctx context.Context, userID string, limit, offset int64) ([]*model.GPSData, error)
 }
 
 type GPSServiceImpl struct {
@@ -25,12 +25,12 @@ func (g *GPSServiceImpl) Save(ctx context.Context, gpsData *model.GPSData) error
 	return g.Repository.Save(ctx, gpsData)
 }
 
-func (g *GPSServiceImpl) FindByDeviceID(ctx context.Context, deviceID string) ([]*model.GPSData, error) {
-	return g.Repository.FindByDeviceID(ctx, deviceID)
+func (g *GPSServiceImpl) FindByDeviceID(ctx context.Context, deviceID string, limit, offset int64) ([]*model.GPSData, error) {
+	return g.Repository.FindByDeviceID(ctx, deviceID, limit, offset)
 }
 
-func (g *GPSServiceImpl) FindByUserID(ctx context.Context, userID string) ([]*model.GPSData, error) {
-	return g.Repository.FindByUserID(ctx, userID)
+func (g *GPSServiceImpl) FindByUserID(ctx context.Context, userID string, limit, offset int64) ([]*model.GPSData, error) {
+	return g.Repository.FindByUserID(ctx, userID, limit, offset)
 }
 
 // Ensure GPSServiceImpl implements GPSService
