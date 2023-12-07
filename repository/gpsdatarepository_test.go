@@ -5,7 +5,7 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/BerryTracer/common-service/adapter/mock"
+	mock "github.com/BerryTracer/common-service/adapter/mock"
 	"github.com/BerryTracer/gps-data-service/model"
 	"github.com/golang/mock/gomock"
 	"go.mongodb.org/mongo-driver/bson"
