@@ -3,7 +3,7 @@ package repository
 import (
 	"context"
 
-	"github.com/BerryTracer/common-service/adapter"
+	"github.com/BerryTracer/common-service/adapter/database/mongodb"
 	"github.com/BerryTracer/gps-data-service/model"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -16,10 +16,10 @@ type GPSDataRepository interface {
 }
 
 type MongoGPSDataRepository struct {
-	Collection adapter.MongoAdapter
+	Collection mongodb.MongoAdapter
 }
 
-func NewMongoGPSDataRepository(collection adapter.MongoAdapter) *MongoGPSDataRepository {
+func NewMongoGPSDataRepository(collection mongodb.MongoAdapter) *MongoGPSDataRepository {
 	return &MongoGPSDataRepository{Collection: collection}
 }
 

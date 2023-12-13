@@ -4,7 +4,7 @@ import (
 	"log"
 	"net"
 
-	"github.com/BerryTracer/common-service/adapter"
+	"github.com/BerryTracer/common-service/adapter/database/mongodb"
 	"github.com/BerryTracer/common-service/config"
 	"github.com/BerryTracer/gps-data-service/api"
 	"github.com/BerryTracer/gps-data-service/database"
@@ -30,7 +30,7 @@ func main() {
 	defer db.Disconnect()
 
 	// Create adapters, repositories, services, and handlers
-	mongoDBAdapter := adapter.NewMongoAdapter(db.Collection)
+	mongoDBAdapter := mongodb.NewMongoAdapter(db.Collection)
 	gpsRepository := repository.NewMongoGPSDataRepository(mongoDBAdapter)
 	gpsService := service.NewGPSService(gpsRepository)
 	gpsHandler := api.NewGPSHandler(gpsService)

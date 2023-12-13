@@ -3,19 +3,20 @@ module github.com/BerryTracer/gps-data-service
 go 1.21.3
 
 require (
-	github.com/BerryTracer/common-service v1.0.4
+	github.com/BerryTracer/common-service v1.1.7
 	github.com/gofiber/fiber/v2 v2.51.0
 	github.com/golang/mock v1.6.0
-	go.mongodb.org/mongo-driver v1.13.0
-	google.golang.org/grpc v1.59.0
+	go.mongodb.org/mongo-driver v1.13.1
+	google.golang.org/grpc v1.60.0
 	google.golang.org/protobuf v1.31.0
 )
 
 require (
-	github.com/gabriel-vasile/mimetype v1.4.2 // indirect
+	github.com/gabriel-vasile/mimetype v1.4.3 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
 	github.com/leodido/go-urn v1.2.4 // indirect
+	google.golang.org/genproto v0.0.0-20231211222908-989df2bf70f3 // indirect
 )
 
 require (
@@ -23,7 +24,7 @@ require (
 	github.com/go-playground/validator/v10 v10.16.0
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
-	github.com/google/uuid v1.4.0 // indirect
+	github.com/google/uuid v1.5.0 // indirect
 	github.com/joho/godotenv v1.5.1 // indirect
 	github.com/klauspost/compress v1.17.4 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
@@ -43,5 +44,5 @@ require (
 	golang.org/x/sync v0.5.0 // indirect
 	golang.org/x/sys v0.15.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20231127180814-3a041ad873d4 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20231212172506-995d672761c0 // indirect
 )
