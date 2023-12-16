@@ -21,8 +21,14 @@ type GPSData struct {
 // Validate validates the GPSData object.
 func (gpsData *GPSData) Validate() error {
 	validate := validator.New()
-	validate.RegisterValidation("latitude", validateLatitude)
-	validate.RegisterValidation("longitude", validateLongitude)
+	err := validate.RegisterValidation("latitude", validateLatitude)
+	if err != nil {
+		return err
+	}
+	err = validate.RegisterValidation("longitude", validateLongitude)
+	if err != nil {
+		return err
+	}
 	return validate.Struct(gpsData)
 }
 
