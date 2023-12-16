@@ -27,7 +27,12 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	defer db.Disconnect()
+	defer func(db *database.GPSDatabase) {
+		err := db.Disconnect()
+		if err != nil {
+			log.Fatalf("failed to serve gRPC server: %v\n", err)
+		}
+	}(db)
 
 	// Create adapters, repositories, services, and handlers
 	mongoDBAdapter := mongodb.NewMongoAdapter(db.Collection)
@@ -73,5 +78,8 @@ func main() {
 	fiberRouter.Get("/gps/user/:user_id", gpsHandler.GetGPSDataByUserId)
 
 	// Start the server
-	app.Listen(":" + httpPort)
+	err = app.Listen(":" + httpPort)
+	if err != nil {
+		log.Fatalf("failed to serve gRPC server: %v\n", err)
+	}
 }

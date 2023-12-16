@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/BerryTracer/gps-data-service/model"
-	mock_repository "github.com/BerryTracer/gps-data-service/repository/mock"
+	mockrepository "github.com/BerryTracer/gps-data-service/repository/mock"
 
 	"github.com/golang/mock/gomock"
 )
@@ -17,7 +17,7 @@ func TestGPSServiceImpl_Save(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockRepo := mock_repository.NewMockGPSDataRepository(ctrl)
+	mockRepo := mockrepository.NewMockGPSDataRepository(ctrl)
 	service := NewGPSService(mockRepo)
 
 	ctx := context.Background()
@@ -48,7 +48,7 @@ func TestGPSServiceImpl_FindByDeviceID(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockRepo := mock_repository.NewMockGPSDataRepository(ctrl)
+	mockRepo := mockrepository.NewMockGPSDataRepository(ctrl)
 	service := NewGPSService(mockRepo)
 
 	ctx := context.Background()
@@ -96,7 +96,7 @@ func TestGPSServiceImpl_FindByUserID(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
-	mockRepo := mock_repository.NewMockGPSDataRepository(ctrl)
+	mockRepo := mockrepository.NewMockGPSDataRepository(ctrl)
 	service := NewGPSService(mockRepo)
 
 	ctx := context.Background()

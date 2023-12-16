@@ -21,13 +21,17 @@ func (g *GPSHandler) SaveGPSData(c HttpContext) error {
 	var gpsData model.GPSData
 	err := c.Bind(&gpsData)
 	if err != nil {
-		c.JSON(400, err)
+		if jsonErr := c.JSON(400, err); jsonErr != nil {
+			return jsonErr
+		}
 		return err
 	}
 
 	err = gpsData.Validate()
 	if err != nil {
-		c.JSON(400, err)
+		if jsonErr := c.JSON(400, err); jsonErr != nil {
+			return jsonErr
+		}
 		return err
 	}
 
@@ -37,7 +41,9 @@ func (g *GPSHandler) SaveGPSData(c HttpContext) error {
 func (g *GPSHandler) GetGPSDataByDeviceId(c HttpContext) error {
 	deviceId := c.Params("device_id")
 	if deviceId == "" {
-		c.SendStatus(400)
+		if jsonErr := c.JSON(400, errors.New("device_id is required")); jsonErr != nil {
+			return jsonErr
+		}
 		return errors.New("device_id is required")
 	}
 
@@ -53,18 +59,21 @@ func (g *GPSHandler) GetGPSDataByDeviceId(c HttpContext) error {
 
 	gpsDataArray, err := g.Service.FindByDeviceID(c.Context(), deviceId, limit, offset)
 	if err != nil {
-		c.JSON(400, err)
+		if jsonErr := c.JSON(400, err); jsonErr != nil {
+			return jsonErr
+		}
 		return err
 	}
 
-	c.JSON(200, gpsDataArray)
-	return nil
+	return c.JSON(200, gpsDataArray)
 }
 
 func (g *GPSHandler) GetGPSDataByUserId(c HttpContext) error {
 	userId := c.Params("user_id")
 	if userId == "" {
-		c.SendStatus(400)
+		if jsonErr := c.JSON(400, errors.New("user_id is required")); jsonErr != nil {
+			return jsonErr
+		}
 		return errors.New("user_id is required")
 	}
 
@@ -80,10 +89,11 @@ func (g *GPSHandler) GetGPSDataByUserId(c HttpContext) error {
 
 	gpsDataArray, err := g.Service.FindByUserID(c.Context(), userId, limit, offset)
 	if err != nil {
-		c.JSON(400, err)
+		if jsonErr := c.JSON(400, err); jsonErr != nil {
+			return jsonErr
+		}
 		return err
 	}
 
-	c.JSON(200, gpsDataArray)
-	return nil
+	return c.JSON(200, gpsDataArray)
 }

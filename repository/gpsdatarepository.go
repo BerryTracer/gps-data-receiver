@@ -2,6 +2,7 @@ package repository
 
 import (
 	"context"
+	"log"
 
 	"github.com/BerryTracer/common-service/adapter/database/mongodb"
 	"github.com/BerryTracer/gps-data-service/model"
@@ -31,13 +32,18 @@ func (m *MongoGPSDataRepository) Save(ctx context.Context, gpsData *model.GPSDat
 func (m *MongoGPSDataRepository) FindByDeviceID(ctx context.Context, deviceID string, page, pageSize int64) ([]*model.GPSData, error) {
 	filter := primitive.M{"device_id": deviceID}
 	skip := (page - 1) * pageSize
-	options := options.Find().SetSkip(skip).SetLimit(pageSize)
+	findOptions := options.Find().SetSkip(skip).SetLimit(pageSize)
 
-	cursor, err := m.Collection.Find(ctx, filter, options)
+	cursor, err := m.Collection.Find(ctx, filter, findOptions)
 	if err != nil {
 		return nil, err
 	}
-	defer cursor.Close(ctx)
+	defer func(cursor mongodb.Cursor, ctx context.Context) {
+		err := cursor.Close(ctx)
+		if err != nil {
+			log.Fatalf("failed to serve gRPC server: %v\n", err)
+		}
+	}(cursor, ctx)
 
 	var gpsData []*model.GPSData
 	if err := cursor.All(ctx, &gpsData); err != nil {
@@ -50,13 +56,18 @@ func (m *MongoGPSDataRepository) FindByDeviceID(ctx context.Context, deviceID st
 func (m *MongoGPSDataRepository) FindByUserID(ctx context.Context, userID string, page, pageSize int64) ([]*model.GPSData, error) {
 	filter := primitive.M{"user_id": userID}
 	skip := (page - 1) * pageSize
-	options := options.Find().SetSkip(skip).SetLimit(pageSize)
+	findOptions := options.Find().SetSkip(skip).SetLimit(pageSize)
 
-	cursor, err := m.Collection.Find(ctx, filter, options)
+	cursor, err := m.Collection.Find(ctx, filter, findOptions)
 	if err != nil {
 		return nil, err
 	}
-	defer cursor.Close(ctx)
+	defer func(cursor mongodb.Cursor, ctx context.Context) {
+		err := cursor.Close(ctx)
+		if err != nil {
+			log.Fatalf("failed to serve gRPC server: %v\n", err)
+		}
+	}(cursor, ctx)
 
 	var gpsData []*model.GPSData
 	if err := cursor.All(ctx, &gpsData); err != nil {
