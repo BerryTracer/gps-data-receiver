@@ -4,6 +4,7 @@ import (
 	"log"
 	"net"
 
+	authservice "github.com/BerryTracer/auth-service/grpc/proto"
 	"github.com/BerryTracer/common-service/adapter/database/mongodb"
 	"github.com/BerryTracer/common-service/config"
 	"github.com/BerryTracer/gps-data-service/api"
@@ -14,10 +15,14 @@ import (
 	"github.com/BerryTracer/gps-data-service/service"
 	"github.com/gofiber/fiber/v2"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 func main() {
+	// Load environment variables from .env file
 	envLoader := config.NewRealEnvLoader()
+
+	// Load the environment variable for the MongoDB URI
 	mongodbURI, err := config.LoadEnv(envLoader, "MONGODB_URI")
 	if err != nil {
 		panic(err)
@@ -46,7 +51,28 @@ func main() {
 		panic(err)
 	}
 
-	gpsGRPCServer := server.NewGPSServer(gpsService)
+	// Load the environment variable for the AuthService URI
+	authAuthServiceURI, err := config.LoadEnv(envLoader, "AUTH_SERVICE_URI")
+	if err != nil {
+		log.Fatalf("failed to load environment variable: %v", err)
+	}
+
+	// Establish a connection to the gRPC server
+	conn, err := grpc.Dial(authAuthServiceURI, grpc.WithTransportCredentials(insecure.NewCredentials()), grpc.WithBlock())
+	if err != nil {
+		log.Fatalf("did not connect: %v", err)
+	}
+	defer func(conn *grpc.ClientConn) {
+		err := conn.Close()
+		if err != nil {
+			log.Fatalf("failed to create indexes: %v", err)
+		}
+	}(conn)
+
+	// Create a client for the AuthService
+	authServiceClient := authservice.NewAuthServiceClient(conn)
+
+	gpsGRPCServer := server.NewGPSServer(authServiceClient, gpsService)
 
 	// Run the gRPC server in a separate goroutine to not block the main thread
 	go func() {
