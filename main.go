@@ -17,7 +17,8 @@ import (
 )
 
 func main() {
-	mongodbURI, err := config.LoadEnv("MONGODB_URI")
+	envLoader := config.NewRealEnvLoader()
+	mongodbURI, err := config.LoadEnv(envLoader, "MONGODB_URI")
 	if err != nil {
 		panic(err)
 	}
@@ -40,7 +41,7 @@ func main() {
 	gpsService := service.NewGPSService(gpsRepository)
 	gpsHandler := api.NewGPSHandler(gpsService)
 
-	grpcPort, err := config.LoadEnvWithDefault("GRPC_PORT", "50051")
+	grpcPort, err := config.LoadEnvWithDefault(envLoader, "GRPC_PORT", "50051")
 	if err != nil {
 		panic(err)
 	}
@@ -63,7 +64,7 @@ func main() {
 		}
 	}()
 
-	httpPort, err := config.LoadEnvWithDefault("HTTP_PORT", "3000")
+	httpPort, err := config.LoadEnvWithDefault(envLoader, "HTTP_PORT", "3000")
 	if err != nil {
 		panic(err)
 	}
